@@ -71,9 +71,9 @@ task sendPackets( input int idx_channel, input int number_of_packets,
 		end
 		drvr2sb.put(data_to_mailbox);
 		////-> startSb;		
-		$display("%0t : INFO    : Driver    : sendPackets()    : packets[%0d] with size_of_packet = %0d sent", $time, i, size_of_packet );		
+		$display("%0t : INFO    : Driver[%0d]    : packets[%0d] with size_of_packet = %0d sent", $time, idx_channel, i, size_of_packet );		
 	end
-	$display("%0t : INFO    : Driver    : sendPackets()    : all packets sent ",$time ); 
+	$display("%0t : INFO    : Driver[%0d]    : all packets sent ",$time, idx_channel ); 
 endtask : sendPackets
 
 endclass

@@ -109,9 +109,8 @@ endtask : wait_for_end
 	// disable scoreboard.start();	 */
 // endtask : test_case_2
 	
-task run( input int number_of_packets, bit is_random_valid = 0, bit is_random_interval = 0, bit is_random_rdy = 0, bit is_check_sequence = 1 );
+task run( input int number_of_packets, bit is_random_valid = 0, bit is_random_packet_interval = 0, bit is_random_rdy = 0, bit is_check_sequence = 1 );
 
-	automatic int cnt_of_packets_from_driver[`NUM_CHANNELS];
 	automatic int cnt_of_packets_from_drivers;	
 	automatic int cnt_of_packets_from_receiver;
 	automatic int cnt_of_packets_from_scoreboard;	
@@ -121,10 +120,14 @@ task run( input int number_of_packets, bit is_random_valid = 0, bit is_random_in
 	// добавить enum индексов!!!!!!!!!!
 	
 	fork
-		driver[0].sendPackets( 0, number_of_packets, is_random_valid, is_random_interval );
-		driver[1].sendPackets( 1, number_of_packets, is_random_valid, is_random_interval );
-		driver[2].sendPackets( 2, number_of_packets, is_random_valid, is_random_interval );
-		driver[3].sendPackets( 3, number_of_packets, is_random_valid, is_random_interval );		
+		fork
+			/* ждем пока все драйвера завершат передачу */
+			driver[0].sendPackets( 0, number_of_packets, is_random_valid, is_random_packet_interval );
+			driver[1].sendPackets( 1, number_of_packets, is_random_valid, is_random_packet_interval );
+			driver[2].sendPackets( 2, number_of_packets, is_random_valid, is_random_packet_interval );
+			driver[3].sendPackets( 3, number_of_packets, is_random_valid, is_random_packet_interval );	
+		join
+	
 		receiver.start( cnt_of_packets_from_receiver, is_random_rdy );
 		scoreboard.start( cnt_of_packets_from_scoreboard, is_check_sequence );
 	join_any
@@ -132,7 +135,7 @@ task run( input int number_of_packets, bit is_random_valid = 0, bit is_random_in
 	/* сравниваем количество отправленных пакетов с количеством принятых пакетов */
 	for( int i = 0; i < `NUM_CHANNELS; i++ )
 	begin
-		$display("%0t : INFO    : Environment : cnt_of_packets_from_driver[%0d] = %0d ",$time, cnt_of_packets_from_driver[i], i );
+		$display("%0t : INFO    : Environment : cnt_of_packets_from_driver[%0d] = %0d ",$time, i, number_of_packets );
 	end	
 	
 	$display("%0t : INFO    : Environment : cnt_of_packets_from_receiver = %0d ",$time, cnt_of_packets_from_receiver );

@@ -42,12 +42,12 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 			/* сравниваем данные буферов driver и receiver */
 			if( rcvrBuf[i].data == drvrBuf[i].data )
 			begin
-				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].data =%0x, drvrData[%0d].data =%0x,", 
+				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].data =%0x, drvrData[%0d].data =%0x", 
 									$time, i, rcvrBuf[i].data, i, drvrBuf[i].data );
 			end						
 			else
 			begin
-				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].data =%0x, drvrData[%0d].data =%0x,", 
+				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].data =%0x, drvrData[%0d].data =%0x", 
 									$time, i, rcvrBuf[i].data, i, drvrBuf[i].data );	
 				$display("%0t : ERROR    : Scoreboard      : drvr2sb.size = %0d, rcvr2sb.size = %0d, length doesn't equal", 
 																																			$time, drvrBuf.size(), rcvrBuf.size() );						
@@ -57,12 +57,12 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 			/* сравниваем текущий id канала driver и ожидаемый id канала receiver */
 			if( rcvrBuf[i].id == drvrBuf[i].id )
 			begin
-				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].id = %0x, drvrData[%0d].id = %0x,", 
+				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].id = %0x, drvrData[%0d].id = %0x", 
 									$time, i, rcvrBuf[i].id, i, drvrBuf[i].id );				
 			end
 			else
 			begin
-				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].id = %0x, drvrData[%0d].id = %0x,", 
+				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].id = %0x, drvrData[%0d].id = %0x", 
 									$time, i, rcvrBuf[i].id, i, drvrBuf[i].id );			
 				//#20;
 				$stop;			
@@ -70,14 +70,14 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 			/* сравниваем текущий индекс канала driver и ожидаемый индекс канала receiver */
 			if( rcvrBuf[i].idx_channel == drvrBuf[i].idx_channel )
 			begin
-				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].idx_channel = %0x, drvrData[%0d].idx_channel = %0x,", 
+				$display("%0t : INFO    : Scoreboard      : equal rcvrData[%0d].idx_channel = %0x, drvrData[%0d].idx_channel = %0x", 
 									$time, i, rcvrBuf[i].idx_channel, i, drvrBuf[i].idx_channel );				
 			end
 			else
 			begin
-				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].idx_channel = %0x, drvrData[%0d].idx_channel = %0x,", 
+				$display("%0t : ERROR : Scoreboard      :  doesn't equal rcvrData[%0d].idx_channel = %0x, drvrData[%0d].idx_channel = %0x", 
 									$time, i, rcvrBuf[i].idx_channel, i, drvrBuf[i].idx_channel );			
-				//#20;
+				#20;
 				$stop;			
 			end			
 			/* тестирование алгоритма round-robin 
@@ -103,14 +103,14 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 		/* сравниваем размер буферов driver и receiver */
 		if( drvrBuf.size() != rcvrBuf.size() )
 		begin
-			$display("%0t : ERROR    : Scoreboard      : drvr2sb.size = %0d, rcvr2sb.size = %0d, length doesn't equal", 
+			$display("%0t : ERROR    : Scoreboard      : drvr2sb.size = %0d, rcvr2sb.size = %0d, size doesn't equal", 
 																																			$time, drvrBuf.size(), rcvrBuf.size() );	
 			//#20;
 			$stop;		
 		end
 		else
 		begin
-			$display("%0t : INFO    : Scoreboard      : drvr2sb.size = %0d, rcvr2sb.size = %0d, length equal", 
+			$display("%0t : INFO    : Scoreboard      : drvr2sb.size = %0d, rcvr2sb.size = %0d, size equal", 
 																																			$time, drvrBuf.size(), rcvrBuf.size() );		
 		end		
 		cnt_of_packets++;	

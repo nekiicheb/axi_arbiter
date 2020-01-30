@@ -37,6 +37,17 @@ task sendPacket( ref axi_data_t data[], input bit is_random_valid = 0, input bit
 	automatic bit random_valid_value;
 	automatic int random_packet_interval;
 	
+		/* устанавливаем интервал между пакетами */
+	if( is_random_packet_interval )
+	begin
+		random_packet_interval =  {$random} % (`NUM_CHANNELS * 8);
+		$display("%0t : INFO    : IAxiStreamMaster    : random_packet_interval = %0d ", $time, random_packet_interval );		
+		for( int i = 0; i < random_packet_interval; i++ )
+		begin 
+			@( posedge addition_intf.aclk );
+		end
+	end
+	
   $display("%0t : INFO    : IAxiStreamMaster    : sendPacket() start ", $time );
 	foreach( data[i] )
 	begin
@@ -90,16 +101,6 @@ task sendPacket( ref axi_data_t data[], input bit is_random_valid = 0, input bit
 			end
 		end
 	end	
-	/* устанавливаем интервал между пакетами */
-	if( is_random_packet_interval )
-	begin
-		random_packet_interval =  {$random} % (`NUM_CHANNELS * 2);
-		$display("%0t : INFO    : IAxiStreamMaster    : random_packet_interval = %0d ", $time, random_packet_interval );		
-		for( int i = 0; i < random_packet_interval; i++ )
-		begin 
-			@( posedge addition_intf.aclk );
-		end
-	end
 /* 	@( posedge addition_intf.aclk );	
 	master_intf.t_data  <= 0;
 	master_intf.t_valid <= 0;

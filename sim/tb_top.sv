@@ -129,7 +129,7 @@ task test_case_2();
   $display("**************************************");
 	env = new( in_intf, out_intf, addition_intf );
 	env.reset( nrst_i );
-	env.run( number_of_packets, 0, is_random_rdy );
+	env.run( number_of_packets, 0, 0, is_random_rdy );
 	env.wait_for_end();
 	env.report();	
   $display("**************************************");
@@ -147,7 +147,6 @@ endtask : test_case_2
 *										1) нет потерь пакетов при граничных значениях IAxiStream.Slave.t_ready и IAxiStream.Slave.t_valid
 *										2) нет потерь данных IAxiStream.Master.t_data, IAxiStream.Master.t_id в пакетах различной длины и 
 *											 значениях IAxiStream.Slave.t_ready и IAxiStream.Slave.t_valid
-*										3) мультиплексирование входных каналов по алгориму round-robin, начиная с 0-го канала
 */	
 task test_case_3();
 
@@ -157,15 +156,15 @@ task test_case_3();
 	automatic bit is_random_rdy = 1;
 	
   $display("**************************************");
-  $display(" %0t : TestCase 2 : start()", $time);
+  $display(" %0t : TestCase 3 : start()", $time);
   $display("**************************************");
 	env = new( in_intf, out_intf, addition_intf );
 	env.reset( nrst_i );
-	env.run( number_of_packets, is_random_valid, is_random_rdy );
+	env.run( number_of_packets, is_random_valid, 0, is_random_rdy, 0 );
 	env.wait_for_end();
 	env.report();	
   $display("**************************************");
-  $display(" %0t : TestCase 2 : end()", $time);
+  $display(" %0t : TestCase 3 : end()", $time);
   $display("**************************************");	
 
 endtask : test_case_3
@@ -174,7 +173,8 @@ endtask : test_case_3
 * Test Case 4: 
 * action: тест одновременно выдаёт на DUT несколько пакетов одновременно на всех каналах с рандомным сигналом IAxiStream.Slave.t_ready и
 *         рандомными сигналами IAxiStream.Slave.t_valid и рандомными паузами между пакетами
-*					( за счет рандомности IAxiStream.Slave.t_ready, IAxiStream.Slave.t_valid получаем проверку модуля в граничных условиях ) 
+*					( за счет рандомности IAxiStream.Slave.t_ready, IAxiStream.Slave.t_valid, интервала между пакетами
+* 					 получаем проверку модуля в граничных условиях и непоследовательных пакетах между каналами ) 
 * expected result: 									
 *										1) нет потерь пакетов при граничных значениях IAxiStream.Slave.t_ready и IAxiStream.Slave.t_valid
 *										2) нет потерь данных IAxiStream.Master.t_data, IAxiStream.Master.t_id в пакетах различной длины, паузы и 
@@ -190,25 +190,25 @@ task test_case_4();
 	automatic bit is_check_sequence = 0;
 	
   $display("**************************************");
-  $display(" %0t : TestCase 2 : start()", $time);
+  $display(" %0t : TestCase 4 : start()", $time);
   $display("**************************************");
 	env = new( in_intf, out_intf, addition_intf );
 	env.reset( nrst_i );
-	env.run( number_of_packets, is_random_valid, is_random_rdy, is_random_packet_interval, is_check_sequence );
+	env.run( number_of_packets, is_random_valid, is_random_packet_interval, is_random_rdy, is_check_sequence );
 	env.wait_for_end();
 	env.report();	
   $display("**************************************");
-  $display(" %0t : TestCase 2 : end()", $time);
+  $display(" %0t : TestCase 4 : end()", $time);
   $display("**************************************");	
 	
 endtask : test_case_4
 
 initial
 begin
-	//test_case_1();
+	test_case_1();
 	test_case_2();
-	//test_case_3();
-	//test_case_4();
+	test_case_3();
+	test_case_4();
 	$stop;
 end
 
