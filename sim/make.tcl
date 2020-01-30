@@ -2,28 +2,12 @@ proc do_compile {} {
   # exec rm -rf work/
   vlib work
   vdel -lib work -all
-  
   vlib work
  
-
-  # vlog -work work "../src/axi_if.sv" 
-	# vlog -work work "../src/arbiter.sv"  
   vlog -work work "../src/*.sv"	
-#  vlog -work work "../rtl/*.v"
 	vlog -work work "axi_arbiter_pkg.sv" 		
-	vlog -work work "axi_addition_if.sv" 	
-	vlog -work work "*.sv" 
-	# vlog -work work "axi_stream_master.sv" 		
-	# vlog -work work "axi_stream_slave.sv" 
-	# vlog -work work "driver.sv" 	
-  # vlog -work work "receiver.sv" 
-  # vlog -work work "scoreboard.sv" 	
-	# vlog -work work "environment.sv" 		
-	# vlog -work work "testcase.sv" 	
-	vlog -work work "tb_top.sv" 	
-	
-	#vlog -work work "*.sv" 
-
+	vlog -work work "arbiter_if.sv" 	
+	vlog -work work "*.sv" 	
 }
 
 proc start_sim {} {

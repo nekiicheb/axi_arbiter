@@ -19,7 +19,7 @@ initial
 
 IAxiStream 	 in_intf[4] ( clk_i, nrst_i );
 IAxiStream   out_intf  ( clk_i, nrst_i );
-AxiAddition  addition_intf( clk_i );
+Arbiter  arbiter_intf( clk_i );
 
 /////////////////////////////////////////////////////
 //  DUT instance and signal connection             //
@@ -36,7 +36,7 @@ arbiter DUT
 	.in_3								 	 			( in_intf[3] ),	
 	
 	.out											 	( out_intf ),
-	.idx_channel								( addition_intf.idx_channel )
+	.idx_channel								( arbiter_intf.idx_channel )
 	
 );
 
@@ -46,7 +46,7 @@ arbiter DUT
 * expected result: 
 *										1) нет потерь пакетов 
 *										2) нет потерь данных IAxiStream.Master.t_data, IAxiStream.Master.t_id в пакетах различной длины 
-*										3) мультиплексирование каналов addition_intf.idx_channel по алгориму round-robin, начиная с 0-го канала 
+*										3) мультиплексирование каналов arbiter_intf.idx_channel по алгориму round-robin, начиная с 0-го канала 
 */
 task test_case_1();
 
@@ -56,7 +56,7 @@ task test_case_1();
   $display("**************************************");
   $display(" %0t : TestCase 1 : start()", $time);
   $display("**************************************");
-	env = new( in_intf, out_intf, addition_intf );
+	env = new( in_intf, out_intf, arbiter_intf );
 	env.reset( nrst_i );
 	env.run( number_of_packets );
 	env.wait_for_end();
@@ -86,7 +86,7 @@ task test_case_2();
   $display("**************************************");
   $display(" %0t : TestCase 2 : start()", $time);
   $display("**************************************");
-	env = new( in_intf, out_intf, addition_intf );
+	env = new( in_intf, out_intf, arbiter_intf );
 	env.reset( nrst_i );
 	env.run( number_of_packets, 0, 0, is_random_rdy );
 	env.wait_for_end();
@@ -117,7 +117,7 @@ task test_case_3();
   $display("**************************************");
   $display(" %0t : TestCase 3 : start()", $time);
   $display("**************************************");
-	env = new( in_intf, out_intf, addition_intf );
+	env = new( in_intf, out_intf, arbiter_intf );
 	env.reset( nrst_i );
 	env.run( number_of_packets, is_random_valid, 0, is_random_rdy, 0 );
 	env.wait_for_end();
@@ -151,7 +151,7 @@ task test_case_4();
   $display("**************************************");
   $display(" %0t : TestCase 4 : start()", $time);
   $display("**************************************");
-	env = new( in_intf, out_intf, addition_intf );
+	env = new( in_intf, out_intf, arbiter_intf );
 	env.reset( nrst_i );
 	env.run( number_of_packets, is_random_valid, is_random_packet_interval, is_random_rdy, is_check_sequence );
 	env.wait_for_end();
