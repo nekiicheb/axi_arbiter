@@ -1,7 +1,6 @@
 `ifndef AXI_ARBITER_RECEIVER
 `define AXI_ARBITER_RECEIVER
 
-`include "globals.vh"
 `include "axi_stream_slave.sv"
 
 import axi_arbiter_pkg::*;

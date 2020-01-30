@@ -1,8 +1,6 @@
 `ifndef AXI_ARBITER_SCOREBOARD
 `define AXI_ARBITER_SCOREBOARD
 
-`include "globals.vh"
-
 import axi_arbiter_pkg::*;
 
 class Scoreboard;
@@ -84,17 +82,17 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 			*  сравниваем ожидаемую последователность переключений каналов с получаемой, после reset первый канал = 0! */
 			if( is_check_sequence )
 			begin
-				if( cnt_of_packets % `NUM_CHANNELS != rcvrBuf[i].idx_channel )
+				if( cnt_of_packets % NUM_CHANNELS != rcvrBuf[i].idx_channel )
 				begin
 					$display("%0t : ERROR    : Scoreboard      : expected_round_robin_idx = %0d is not equal rcvrBuf.idx_channel = %0d", 
-											$time, cnt_of_packets % `NUM_CHANNELS, rcvrBuf[i].idx_channel );	
+											$time, cnt_of_packets % NUM_CHANNELS, rcvrBuf[i].idx_channel );	
 					//#20;
 					$stop;											
 				end
 				else
 				begin
 					$display("%0t : INFO    : Scoreboard      : expected_round_robin_idx = %0d is equal rcvrBuf.idx_channel = %0d", 
-											$time, cnt_of_packets % `NUM_CHANNELS, rcvrBuf[i].idx_channel );					
+											$time, cnt_of_packets % NUM_CHANNELS, rcvrBuf[i].idx_channel );					
 				
 				end
 			end

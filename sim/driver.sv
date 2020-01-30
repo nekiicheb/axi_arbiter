@@ -1,7 +1,6 @@
 `ifndef AXI_ARBITER_DRIVER
 `define AXI_ARBITER_DRIVER
 
-`include "globals.vh"
 `include "axi_stream_master.sv"
 
 import axi_arbiter_pkg::*;
@@ -51,7 +50,7 @@ task sendPackets( input int idx_channel, input int number_of_packets,
 	begin
 		
 		/* формируем пакет, длина не может быть = 0 */
-		automatic int size_of_packet = ( i % `MAX_PACKET_SIZE ) + 1;
+		automatic int size_of_packet = ( i % MAX_PACKET_SIZE ) + 1;
 		automatic axi_data_t data[];			
 		data = new[ size_of_packet ];
 		/* заполняем пакет данными от 1 до j+1 */

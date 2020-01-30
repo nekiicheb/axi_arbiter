@@ -25,47 +25,6 @@ AxiAddition  addition_intf( clk_i );
 //  DUT instance and signal connection             //
 /////////////////////////////////////////////////////
 
-
-/* IAxiStream in_0 (clk_i, nrst_i);
-IAxiStream in_1 (clk_i, nrst_i);
-IAxiStream in_2 (clk_i, nrst_i);
-IAxiStream in_3 (clk_i, nrst_i);
-IAxiStream out  (clk_i, nrst_i);
-
-generate
-	assign in_0.t_valid   			= in_intf[0].t_valid;
-	assign in_0.t_last    			= in_intf[0].t_last;
-	assign in_0.t_data    			= in_intf[0].t_data;
-	assign in_0.t_id	    			= in_intf[0].t_id ;
-  assign in_intf[0].t_ready   = in_0.t_ready;
-
-
-	assign in_1.t_valid   			= in_intf[1].t_valid;
-	assign in_1.t_last    			= in_intf[1].t_last;
-	assign in_1.t_data    			= in_intf[1].t_data;
-  assign in_1.t_id	    			= in_intf[1].t_id ;
-	assign in_intf[1].t_ready   = in_1.t_ready;
-
-	assign in_2.t_valid  			  = in_intf[2].t_valid;
-	assign in_2.t_last    			= in_intf[2].t_last;
-	assign in_2.t_data    			= in_intf[2].t_data;
-	assign in_2.t_id	    			= in_intf[2].t_id ;
-	assign in_intf[2].t_ready   = in_2.t_ready;
-
-	assign in_3.t_valid   			= in_intf[3].t_valid;
-	assign in_3.t_last    			= in_intf[3].t_last;
-	assign in_3.t_data    			= in_intf[3].t_data;
-	assign in_3.t_id	    			= in_intf[3].t_id ;
-	assign in_intf[3].t_ready   = in_3.t_ready;
-	
-	assign out_intf.t_valid 		= out.t_valid;
-	assign out_intf.t_last  		= out.t_last;
-	assign out_intf.t_data  		= out.t_data;
-	assign out_intf.t_id	  		= out.t_id ;
-	assign out.t_ready  				= out_intf.t_ready; 
-	
-endgenerate
- */
 arbiter DUT
 (
 	.clk											  ( clk_i ),	

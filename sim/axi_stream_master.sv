@@ -1,8 +1,6 @@
 `ifndef AXI_STREAM_MASTER
 `define AXI_STREAM_MASTER
 
-`include "globals.vh"
-
 import axi_arbiter_pkg::*;
 
 class IAxiStreamMaster;
@@ -40,7 +38,7 @@ task sendPacket( ref axi_data_t data[], input bit is_random_valid = 0, input bit
 		/* устанавливаем интервал между пакетами */
 	if( is_random_packet_interval )
 	begin
-		random_packet_interval =  {$random} % (`NUM_CHANNELS * 8);
+		random_packet_interval =  {$random} % (NUM_CHANNELS * 8);
 		$display("%0t : INFO    : IAxiStreamMaster    : random_packet_interval = %0d ", $time, random_packet_interval );		
 		for( int i = 0; i < random_packet_interval; i++ )
 		begin 
@@ -110,7 +108,7 @@ task sendPacket( ref axi_data_t data[], input bit is_random_valid = 0, input bit
 	
 endtask : sendPacket
 
-/* task sendPacket( ref bit [`DATA_SIZE-1:0] data[] );
+/* task sendPacket( ref bit [DATA_SIZE-1:0] data[] );
 
   $display("%0t : INFO    : IAxiStreamMaster    : sendPacket() start ", $time );
 	foreach( data[i] )

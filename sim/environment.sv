@@ -133,14 +133,14 @@ task run( input int number_of_packets, bit is_random_valid = 0, bit is_random_pa
 	join_any
 	wait_for_end();
 	/* сравниваем количество отправленных пакетов с количеством принятых пакетов */
-	for( int i = 0; i < `NUM_CHANNELS; i++ )
+	for( int i = 0; i < NUM_CHANNELS; i++ )
 	begin
 		$display("%0t : INFO    : Environment : cnt_of_packets_from_driver[%0d] = %0d ",$time, i, number_of_packets );
 	end	
 	
 	$display("%0t : INFO    : Environment : cnt_of_packets_from_receiver = %0d ",$time, cnt_of_packets_from_receiver );
 	$display("%0t : INFO    : Environment : cnt_of_packets_from_scoreboard = %0d ",$time, cnt_of_packets_from_scoreboard );
-	cnt_of_packets_from_drivers = `NUM_CHANNELS * number_of_packets;
+	cnt_of_packets_from_drivers = NUM_CHANNELS * number_of_packets;
 	if( ( cnt_of_packets_from_drivers == cnt_of_packets_from_receiver ) && 
 			( cnt_of_packets_from_receiver == cnt_of_packets_from_scoreboard ) )
 	begin

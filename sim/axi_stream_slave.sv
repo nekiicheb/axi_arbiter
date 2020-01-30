@@ -1,8 +1,6 @@
 `ifndef AXI_STREAM_SLAVE
 `define AXI_STREAM_SLAVE
 
-`include "globals.vh"
-
 import axi_arbiter_pkg::*;
 
 class IAxiStreamSlave;
