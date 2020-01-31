@@ -10,16 +10,14 @@ virtual IAxiStream.Slave slave_intf;
 virtual Arbiter arbiter_intf;
 IAxiStreamSlave slave;
 mailbox rcvr2sb;
-event startSb;
 
 //// constructor method ////
 function new(virtual IAxiStream.Slave slave_intf_new, virtual Arbiter arbiter_intf_new,
-						 mailbox rcvr2sb_new, event startSb_new );
+						 mailbox rcvr2sb_new );
 
    this.slave_intf    = slave_intf_new;
 	 this.arbiter_intf  = arbiter_intf_new;
 	 slave = new( this.slave_intf, this.arbiter_intf );	
-	 this.startSb = startSb_new;	
    if(rcvr2sb_new == null)
    begin
      $display(" **ERROR**: rcvr2sb_new is null");
@@ -56,8 +54,7 @@ task start( ref int cnt_of_packets, input bit is_random_rdy = 0 );
 		slave.getPacket( dst, is_random_rdy );
 		$display("%0t : INFO    : Receiver      : packet[%0d] with size = %0d was get: ", $time, cnt_of_packets + 1, dst.size );	
 		/* кладём данные в mailbox ReceiverToScoreboard*/
-		rcvr2sb.put( dst );
-		-> startSb;			
+		rcvr2sb.put( dst );	
 		cnt_of_packets++;
 	end
 	$display("%0t : INFO    : Receiver      : end ", $time );		

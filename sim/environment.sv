@@ -16,7 +16,6 @@ Receiver receiver;
 Scoreboard scoreboard;
 mailbox  driver2scoreboard;
 mailbox  receiver2scoreboard;
-event startSb;
 
 function new( virtual IAxiStream.Master master_intf_new[4],
 							virtual IAxiStream.Slave  slave_intf_new,
@@ -28,11 +27,11 @@ function new( virtual IAxiStream.Master master_intf_new[4],
 	this.arbiter_intf   = arbiter_intf_new;
 	driver2scoreboard = new(1); 
 	receiver2scoreboard = new(1); 
-	receiver = new( slave_intf_new, arbiter_intf, receiver2scoreboard, startSb );
-	scoreboard = new( receiver2scoreboard, driver2scoreboard, startSb );
+	receiver = new( slave_intf_new, arbiter_intf, receiver2scoreboard );
+	scoreboard = new( receiver2scoreboard, driver2scoreboard );
 	foreach( driver[i] )
 	begin
-		driver[i] = new( master_intf_new[i], arbiter_intf, driver2scoreboard, startSb );
+		driver[i] = new( master_intf_new[i], arbiter_intf, driver2scoreboard );
 	end
   $display("%0t : INFO    : Environment : created object", $time);
 

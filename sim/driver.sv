@@ -10,16 +10,14 @@ virtual IAxiStream.Master master_intf;
 virtual Arbiter arbiter_intf;
 mailbox drvr2sb;
 IAxiStreamMaster master;
-event startSb;
 
 /* constructor method */
 function new( virtual IAxiStream.Master master_intf_new, virtual Arbiter arbiter_intf_new, 
-							mailbox drvr2sb_new, event startSb_new  );
+							mailbox drvr2sb_new  );
 
   this.master_intf = master_intf_new;
 	this.arbiter_intf = arbiter_intf_new;
 	master = new( this.master_intf, this.arbiter_intf );	
-	this.startSb = startSb_new;		
   if( drvr2sb_new == null )
   begin
 	  $display(" **ERROR**: drvr2sb_new is null");
@@ -73,8 +71,7 @@ task sendPackets( input int idx_channel, input int number_of_packets,
 			src[j].idx_channel = idx_channel;
 			data_to_mailbox.push_back(src[j]);
 		end
-		drvr2sb.put(data_to_mailbox);
-		////-> startSb;		
+		drvr2sb.put(data_to_mailbox);	
 		$display("%0t : INFO    : Driver[%0d]    : packets[%0d] with size_of_packet = %0d sent", $time, idx_channel, i, size_of_packet );		
 	end
 	$display("%0t : INFO    : Driver[%0d]    : all packets sent ",$time, idx_channel ); 

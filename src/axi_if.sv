@@ -3,7 +3,7 @@ interface IAxiStream (
   input logic areset_n
 );
 
-parameter DATA_SIZE = 32;
+parameter DATA_SIZE = 32; 
 parameter ID_SIZE = 8;
 
 typedef logic [DATA_SIZE - 1 : 0] TData;
@@ -33,24 +33,3 @@ modport Slave(
   input  t_id
 );
 endinterface //IAxiStream
-
-
-//interface IAxiStreamLocal (
-//  input logic aclk,
-//  input logic areset_n
-//);
-//
-//parameter DATA_SIZE = 32;
-//parameter ID_SIZE = 8;
-//
-//typedef logic [DATA_SIZE - 1 : 0] TData;
-//typedef logic [ID_SIZE - 1 : 0] TId;
-//
-//// -----------------------------------------------------------------------------
-//logic t_valid;
-//logic t_ready;
-//logic t_last;
-//TData t_data;
-//TId t_id;
-//
-//endinterface //IAxiStream

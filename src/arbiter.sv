@@ -3,23 +3,26 @@ module arbiter
   input 				  	clk,
   input 				  	reset_n,
   IAxiStream.Slave  in_0,
-  IAxiStream.Slave  in_1,
+  IAxiStream.Slave  in_1, 
   IAxiStream.Slave  in_2,
   IAxiStream.Slave  in_3,
   IAxiStream.Master out
 	
 	// synthesis translate_off
-	/* для тестирования переключений мультиплексора */
+	/* для тестирования переключений каналов арбитера */
 	,output 	[1:0] 	idx_channel
 	// synthesis translate_on
 );
-	 
+
+/* количество входных каналов для арбитра*/	 
 localparam NUM_CHANNELS  = 4;
+/* размер каналов для арбитра*/	
 localparam CHANNELS_W    = ( $clog2( NUM_CHANNELS ) );
 
 IAxiStream in[NUM_CHANNELS] (clk, reset_n);
 
-/* Не параметризованный код, но рабочий. в rtl_viewer создаются буфера 
+/* TODO 
+*  Не параметризованный код, но рабочий. в rtl_viewer создаются буфера, 
 *  Пока не нашёл способа работы с массивами интерфейсов
 */
 generate
@@ -48,19 +51,6 @@ generate
 	assign in_3.t_ready  = in[3].t_ready;
 endgenerate
 
-//module connect (
-//
-//  bus.m bus1d[2]
-//);
-//
-//endmodule 
-
-//logic t_valid;
-//logic t_ready;
-//logic t_last;
-//TData t_data;
-//TId t_id;
-
 
 axi_arbiter
 #( 
@@ -72,15 +62,11 @@ axi_arbiter
   .clk_i				( clk ),
   .rst_n				( reset_n ),
 
-	.in 					( in ),
-//	.in[0]				( in_0 ),
-//  .in[1]				( in_1 ),
-//	.in[2]				( in_2 ),
-//  .in[3]				( in_3 ),	
+  .in 					( in ),
   .out					( out  )
-	// synthesis translate_off
-	,.idx_channel	( idx_channel )
-	// synthesis translate_on
+  // synthesis translate_off
+  ,.idx_channel	( idx_channel )
+  // synthesis translate_on
 
 );
 	

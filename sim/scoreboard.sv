@@ -7,13 +7,11 @@ class Scoreboard;
 
 mailbox drvr2sb;
 mailbox rcvr2sb;
-event startSb; 
 
-function new( mailbox drvr2sb_new, mailbox rcvr2sb_new, event startSb_new  );
+function new( mailbox drvr2sb_new, mailbox rcvr2sb_new );
 
   this.drvr2sb = drvr2sb_new;
   this.rcvr2sb = rcvr2sb_new;
-	this.startSb = startSb_new;
 
 endfunction : new
 
@@ -32,12 +30,11 @@ task start( ref int cnt_of_packets, input int is_check_sequence = 1 );
 	begin
 		drvrBuf = {}; // clear queue
 		rcvrBuf = {}; // clear queue	
-		/* ожидаем данных от receiver и driver */
-		@startSb;
-		$display( "%0t : INFO    : Scoreboard      : 	cnt_of_packets = %0d", $time, 	cnt_of_packets + 1 ); 	
     rcvr2sb.get(rcvrBuf);
+		$display(" %0d : Scorebooard : received packet from receiver ",$time);		
     drvr2sb.get(drvrBuf);
-
+		$display(" %0d : Scorebooard : received packet from driver ",$time);		
+		$display( "%0t : INFO    : Scoreboard      : 	cnt_of_packets = %0d", $time, 	cnt_of_packets + 1 ); 	
 		foreach( rcvrBuf[i] )
 		begin
 			/* сравниваем принятые t_data с ожидаемыми t_data  */

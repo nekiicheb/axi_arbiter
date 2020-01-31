@@ -49,4 +49,5 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name SYSTEMVERILOG_FILE src/axi_arbiter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE src/axi_if.sv
 set_global_assignment -name SYSTEMVERILOG_FILE src/arbiter.sv
+set_global_assignment -name SDC_FILE fpga.sdc
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
